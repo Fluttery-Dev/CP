@@ -5,24 +5,38 @@ using namespace std;
 const int MOD = 1e9 + 7;
 const int INF = LLONG_MAX >> 1;
 
-void solve()
+string solve(string s)
 {
 
-    int n, k;
-    cin >> k >> n;
-
-    if (n % 3 == 0)
-    {
-        cout << -1;
-        return;
+ stack<char> st;
+    for (int i = 0; i < s.length(); i++) {
+        if (st.empty())          
+            st.push(s[i]);
+    
+        else if ((st.top() == '(' && s[i] == ')')
+                 || (st.top() == '{' && s[i] == '}')
+                 || (st.top() == '[' && s[i] == ']')) 
+            
+            st.pop();
+        
+        else {
+            st.push(s[i]);
+        }
     }
+    string ans;
+    if (st.empty())
+        ans  = "YES";
+    
+    else ans="NO";
+    return ans;}
 
-    cout << n - (n / 3);
-}
 
 signed main()
 {
     ios::sync_with_stdio(false);
     cin.tie(NULL);
-    solve();
+    string s;
+    cin>>s;
+    cout<<solve(s);
 }
+
