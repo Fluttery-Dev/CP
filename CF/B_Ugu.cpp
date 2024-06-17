@@ -47,7 +47,21 @@ template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {
 
 
 void solve(){
+    int n;
+    cin>>n;
+    string str;
+    int ans=0;
+    cin>>str;
 
+    forn(i,n){
+        if(i > 0 && str[i] != str[i-1]) ans++;
+    }
+
+    if(str[0] == '0'){
+        cout<<max(ans-1,0ll)<<endl;
+        return;
+    }
+    cout<<ans<<endl;
 }
 
 signed main()

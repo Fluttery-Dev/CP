@@ -47,18 +47,27 @@ template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {
 
 
 void solve(){
-    int n;
+    int  n;
     cin>>n;
-    vi arr(n);
-    forn(i,n) cin>>arr[i];
 
-    cout<<fixed<<setprecision(0);
-    cout<<n<<endl;
-    forn(i,n){
-        int l = log2(arr[i]);
-        cout<<i+1 sp pow(2,l+1)-arr[i]<<endl;
+    string str;
+    cin>>str;
+    int ans=0;
+    
+    
+    forn(l,n){
+        unordered_map<char,int> mp;
+        int mx = INT_MIN;
+        forn(i,min(100ll, n-l)){
+            int r = l+i;
+            mp[str[r]]++;
+            mx = max(mx, mp[str[r]]);
+
+            if(mx <= mp.size()) ans++;
+        }
     }
 
+    cout<<ans<<endl;
 }
 
 signed main()

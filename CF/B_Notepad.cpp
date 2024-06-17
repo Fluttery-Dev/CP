@@ -49,15 +49,18 @@ template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {
 void solve(){
     int n;
     cin>>n;
-    vi arr(n);
-    forn(i,n) cin>>arr[i];
+    string str;
+    cin>>str;
 
-    cout<<fixed<<setprecision(0);
-    cout<<n<<endl;
-    forn(i,n){
-        int l = log2(arr[i]);
-        cout<<i+1 sp pow(2,l+1)-arr[i]<<endl;
+
+    forn(i,n-1){
+        string s = str.substr(i,2);
+        if(str.find(s, i+2)  != string::npos){
+            cout<<"YES"<<endl; return;
+        }
     }
+
+    cout<<"NO"<<endl;
 
 }
 

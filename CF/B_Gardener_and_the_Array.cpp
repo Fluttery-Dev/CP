@@ -48,17 +48,39 @@ template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {
 
 void solve(){
     int n;
-    cin>>n;
-    vi arr(n);
-    forn(i,n) cin>>arr[i];
-
-    cout<<fixed<<setprecision(0);
-    cout<<n<<endl;
-    forn(i,n){
-        int l = log2(arr[i]);
-        cout<<i+1 sp pow(2,l+1)-arr[i]<<endl;
+    cin >> n;
+ 
+    vector<vector<int> > a(n);
+    map<int, int> occurrences;
+    for (int i = 0; i < n; ++i) {
+        int k;
+        cin >> k;
+ 
+        a[i].resize(k);
+        for (int j = 0; j < k; ++j) {
+            cin >> a[i][j];
+            --a[i][j];
+ 
+            ++occurrences[a[i][j]];
+        }
     }
-
+    
+    for (int i = 0; i < n; ++i) {
+        bool find = false;
+        for (int j = 0; j < a[i].size(); ++j) {
+            if (occurrences[a[i][j]] == 1) {
+                find = true;
+                break;
+            }
+        }
+ 
+        if (!find) {
+            cout << "Yes\n";
+            return;
+        }
+    }
+ 
+    cout << "No\n";
 }
 
 signed main()

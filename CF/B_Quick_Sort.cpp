@@ -47,18 +47,22 @@ template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {
 
 
 void solve(){
-    int n;
-    cin>>n;
+
+    int n,k;
+    cin>>n>>k;
+
+    int t = 1;
     vi arr(n);
     forn(i,n) cin>>arr[i];
 
-    cout<<fixed<<setprecision(0);
-    cout<<n<<endl;
-    forn(i,n){
-        int l = log2(arr[i]);
-        cout<<i+1 sp pow(2,l+1)-arr[i]<<endl;
+    auto it = find(all(arr), 1);
+
+    while(it != arr.end()){
+        if(*it == t+1) t++;
+        it++;
     }
 
+    cout<< (n-t+k-1)/k<<endl;
 }
 
 signed main()
