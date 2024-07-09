@@ -21,6 +21,12 @@
     "initializer_list": "cpp",
     "valarray": "cpp",
     "complex": "cpp",
-    "cstdlib": "cpp"
+    "cstdlib": "cpp",
+    "forward_list": "cpp",
+    "unordered_map": "cpp",
+    "unordered_set": "cpp",
+    "format": "cpp",
+    "ranges": "cpp",
+    "regex": "cpp"
   }
 }
