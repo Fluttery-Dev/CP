@@ -47,16 +47,17 @@ template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {
 
 
 void solve(){
-    int n;
-    cin>>n;
-    vi arr(n);
-    forn(i,n) cin>>arr[i];
+    int n,m;
+    cin>>n>>m;
 
-    vi months = {31,28,31,30,31,30,31,31,30,31,30,31,31,28,31,30,31,30,31,31,30,31,30,31,31,29,31,30,31,30,31,31,30,31,30,31, 31,28,31,30,31,30,31,31,30,31,30,31, 31,28,31,30,31,30,31,31,30,31,30,31, 31,28,31,30,31,30,31,31,30,31,30,31};
-    auto it  = search(all(months), all(arr));
+    if(n==1){cout<<1; return;}
+    double t =  n/2.0;
 
-    if(it == months.end()) cout<<"No";
-    else cout<<"Yes";
+    if(m > t){
+        cout<<m-1; return;
+    }
+
+    cout<<m+1;
 }
 
 signed main()

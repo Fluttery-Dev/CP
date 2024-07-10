@@ -44,19 +44,49 @@ template <class T, class... S> void dbs(string str, T t, S... s) {int idx = str.
 template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {if (i != a) cerr << ", "; cerr << *i;} cerr << "]\n";}
 //----------------- //
 
+vi zero = {0,0,0,0,0,0,0,0,0,0};
+bool is_possible(int n, vector<vector<int>> &freq){
+    // cout<<n sp freq[0][n] sp freq[1][n] sp freq[2][n]<<endl;
+    if(n < 10) return freq[0][n] || freq[1][n] || freq[2][n];
 
+    bool possible = false;
+
+    int t = n%10;
+    forn(i,3){
+        if(freq[i][t]){
+            // cout<<t sp i<<endl;
+            vi temp = freq[i];
+            freq[i]= zero;
+            possible |= is_possible(n/10, freq);
+            freq[i] = temp;
+        }
+    }
+    
+    return possible;
+}
 
 void solve(){
     int n;
     cin>>n;
-    vi arr(n);
-    forn(i,n) cin>>arr[i];
 
-    vi months = {31,28,31,30,31,30,31,31,30,31,30,31,31,28,31,30,31,30,31,31,30,31,30,31,31,29,31,30,31,30,31,31,30,31,30,31, 31,28,31,30,31,30,31,31,30,31,30,31, 31,28,31,30,31,30,31,31,30,31,30,31, 31,28,31,30,31,30,31,31,30,31,30,31};
-    auto it  = search(all(months), all(arr));
+    vector<vector<int>> freq(3,vi (10));
+    
+    int t;
+    forn(i,n){
+        forn(j,6){
+            cin>>t;
+            freq[i][t]++;
+        }
+    }
 
-    if(it == months.end()) cout<<"No";
-    else cout<<"Yes";
+    for(int i = 1; i<100; i++){
+        // if(i == 99)
+        // cout<<i sp is_possible(i,freq)<<endl;
+        if(!is_possible(i,freq)){
+            cout<<i-1; return ;
+        }
+    }
+
 }
 
 signed main()

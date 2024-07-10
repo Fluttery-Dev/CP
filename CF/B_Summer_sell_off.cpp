@@ -45,18 +45,36 @@ template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {
 //----------------- //
 
 
+bool comp(pair<int,int> a, pair<int,int> b){
+    if(a.first < a.second && b.first >= b.second) return true;
+    if(b.first < b.second && a.first >= a.second) return true;
+
+    return min(2*a.first , a.second) > min(2*b.first, b.second);
+}
 
 void solve(){
-    int n;
-    cin>>n;
-    vi arr(n);
-    forn(i,n) cin>>arr[i];
 
-    vi months = {31,28,31,30,31,30,31,31,30,31,30,31,31,28,31,30,31,30,31,31,30,31,30,31,31,29,31,30,31,30,31,31,30,31,30,31, 31,28,31,30,31,30,31,31,30,31,30,31, 31,28,31,30,31,30,31,31,30,31,30,31, 31,28,31,30,31,30,31,31,30,31,30,31};
-    auto it  = search(all(months), all(arr));
+    int n,f;
+    cin>>n>>f;
+    vi k(n), l (n);
+    vector<pair<int,int>> a;
+    for (int i = 0; i < n; i++) {
+    cin >> k[i] >> l[i];
+    a.push_back(make_pair(min(2 * k[i], l[i]) - min(k[i], l[i]), i));
+}
+sort(a.rbegin(), a.rend());
 
-    if(it == months.end()) cout<<"No";
-    else cout<<"Yes";
+long long ans = 0;
+for (int i = 0; i < f; i++) {
+    int pos = a[i].second;
+    ans += min(2 * k[pos], l[pos]);
+}
+for (int i = f; i < n; i++) {
+    int pos = a[i].second;
+    ans += min(k[pos], l[pos]);
+}
+cout << ans;
+
 }
 
 signed main()
