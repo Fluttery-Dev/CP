@@ -44,27 +44,55 @@ template <class T, class... S> void dbs(string str, T t, S... s) {int idx = str.
 template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {if (i != a) cerr << ", "; cerr << *i;} cerr << "]\n";}
 //----------------- //
 
+int calc(int t, int n, int k, vector<int> arr){
 
+    forn(i,n){
+        if(arr[i] < t){
+            k-=(t-arr[i]);
+            arr[i] = t;
+        }
+    }
+    if(k <0) return -1;
+   
+    int c = count(all(arr), t);
+    if(k > c) c = 0;
+    else c = c-k;
+    // cout<<t sp n sp k sp c<<endl;
+    // printv(arr);
+    return n*t- (c-1);
+}
 
 void solve(){
-    int  n,m;
-    cin>>n>>m;
+    int n,k;
+    cin>>n>>k;
 
-    int t = min(n,m);
+    vi arr(n);
+    forn(i,n) cin>>arr[i];
+    sort(all(arr));
+    int mn = arr[0];
+    int mx = mn+k;
+    int ans = 0;
+    while (mn <= mx)
+    {
+        int mid = (mx+mn)/2;
+        int t = calc(mid, n, k, arr);
+        ans = max(ans,t);
 
-    cout<<t+1<<endl;
-
-    forn(i,t+1){
-        cout<<i sp t-i<<endl;
+        if(t == -1){
+            mx = mid-1;
+        }else{
+            mn = mid+1;
+        }
     }
-}
+    cout<<ans<<endl;
+}   
 
 signed main()
 {
    fast()
 
     int t=1;
-    // cin >> t;
+    cin >> t;
 
     while (t--)
     {

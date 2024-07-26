@@ -44,19 +44,39 @@ template <class T, class... S> void dbs(string str, T t, S... s) {int idx = str.
 template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {if (i != a) cerr << ", "; cerr << *i;} cerr << "]\n";}
 //----------------- //
 
+int n,m;
+int i=0, j=0;
 
+void print(int r){
+    cout<< r;
+    forn(k,r){
+        cout<<" "<<i+1 sp j+1;
+
+        if( i&1) j--;
+        else j++;
+
+        if( j==m){
+            i++;
+            j=m-1;
+        }
+        if(j==-1){
+            i++;
+            j=0;
+        }
+    }
+    cout<<endl;
+}
 
 void solve(){
-    int  n,m;
-    cin>>n>>m;
+    int r;
+    cin>>n>>m>>r;
 
-    int t = min(n,m);
 
-    cout<<t+1<<endl;
 
-    forn(i,t+1){
-        cout<<i sp t-i<<endl;
+    forn(t,r-1){
+        print(2);
     }
+    print(n*m- 2*(r-1));
 }
 
 signed main()

@@ -45,26 +45,57 @@ template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {
 //----------------- //
 
 
+int calc(int x, map<int,int> &p, int m){
+    int a = p[x];
+    int b = 0;
+    int y = x+1;
+
+    if(p.find(y) != p.end()) b = p[y];
+    int ans = 0;
+    // cout<<a sp b<<endl;
+
+    if(a*x + b*y <= m) return a*x+ b*y;
+
+    int a1 = min(a, m/x);
+    int rem = m - x*a1;
+    int b1 = min(b, rem/y);
+    int b2 = b-b1;
+    rem = rem -b1*y;
+    int c = min({b2, rem, a1});
+    ans = a1*x + b1*y + c;
+    return ans;
+}
+
 
 void solve(){
-    int  n,m;
+    int n,m;
     cin>>n>>m;
-
-    int t = min(n,m);
-
-    cout<<t+1<<endl;
-
-    forn(i,t+1){
-        cout<<i sp t-i<<endl;
+    map<int,int> p;
+    set<int> s;
+    
+    int t;
+    forn(i,n){
+        cin>>t;
+        p[t]++;
+        s.insert(t);
     }
-}
+    // printv(p)
+    int ans = 0;
+    for(auto x: s){
+        t = calc(x,p,m);
+        // cout<<x sp t<<endl;
+        ans = max(ans,t);
+    }
+
+    cout<<ans<<endl;
+}   
 
 signed main()
 {
    fast()
 
     int t=1;
-    // cin >> t;
+    cin >> t;
 
     while (t--)
     {

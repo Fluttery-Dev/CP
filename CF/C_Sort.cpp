@@ -44,19 +44,44 @@ template <class T, class... S> void dbs(string str, T t, S... s) {int idx = str.
 template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {if (i != a) cerr << ", "; cerr << *i;} cerr << "]\n";}
 //----------------- //
 
-
+int calc(vi &a, vi &b){
+    int c = 0;
+    forn(i,26){
+        c+= abs(a[i] - b[i]);
+    }
+    return (c+1)/2;
+}
 
 void solve(){
-    int  n,m;
-    cin>>n>>m;
+    int n,q;
+    cin>>n>>q;
 
-    int t = min(n,m);
+    string s,t;
+    cin>>s>>t;
 
-    cout<<t+1<<endl;
-
-    forn(i,t+1){
-        cout<<i sp t-i<<endl;
+    vi diff(n);
+    vi a(26), b(26);
+    forn(i,n){
+        a[s[i]-'a']++;
+        b[t[i]-'a']++;
+        diff[i] = calc(a,b); 
     }
+
+    // printv(diff)
+    // for (int i = 1; i < n; i++)
+    // {
+    //     diff[i]+= diff[i-1];
+    // }
+    diff.insert(diff.begin(),0);
+    
+    // printv(diff)
+    int x,y;
+    while(q--){
+        cin>>x>>y;
+
+        cout<<abs(diff[y]-diff[x-1])<<endl;
+    }
+    
 }
 
 signed main()
@@ -64,7 +89,7 @@ signed main()
    fast()
 
     int t=1;
-    // cin >> t;
+    cin >> t;
 
     while (t--)
     {

@@ -47,16 +47,35 @@ template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {
 
 
 void solve(){
-    int  n,m;
-    cin>>n>>m;
+    int n, k;
+    cin >> n >> k;
 
-    int t = min(n,m);
+    vector<int> arr(n), brr(n);
+    priority_queue<pair<int, int>> pq;
 
-    cout<<t+1<<endl;
+    forn(i, n) cin >> arr[i];
+    forn(i, n) cin >> brr[i];
 
-    forn(i,t+1){
-        cout<<i sp t-i<<endl;
+    forn(i, n) {
+        pq.push({arr[i], brr[i]});
     }
+
+    int ans = 0;
+    for(int i=0; i<k; ) {
+        if( pq.empty()) break;
+        auto p = pq.top();
+        pq.pop();
+        while(i<k && p.first >= pq.top().first){
+            ans += p.first;
+            i++;
+            p.first -= p.second;
+        }   
+        if (p.first > 0) {
+            pq.push({p.first, p.second});
+        }
+    }
+
+    cout << ans << endl;
 }
 
 signed main()
@@ -64,7 +83,7 @@ signed main()
    fast()
 
     int t=1;
-    // cin >> t;
+    cin >> t;
 
     while (t--)
     {
