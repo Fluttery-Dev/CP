@@ -45,41 +45,30 @@ template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {
 //----------------- //
 
 
+bool isValid(vi &arr, int n, int k){
+    vi vis(n);
+    int j = n-1;
+    forn(i,k){
+        // cout<<j sp vis[j] sp arr[j]<<endl;
+        if(arr[j] > n) return false;
+        if(vis[j]) return true;
+        vis[j] = true;
+        j-=arr[j];
+        j = (j+n)%n;
+    }
 
+    return true;
+}
 void solve(){
-    int n;
-    cin>>n;
+    int n,k;
+    cin>>n>>k;
+
     vi arr(n);
 
     forn(i,n) cin>>arr[i];
-
-    sort(all(arr));
-
-    int i=0, j = n-1;
-    int s = 0;
-    int ans = 0;
-    while(i<j){
-        // cout<<i sp j sp s sp ans<<endl;
-        if(s+ arr[i] < arr[j]){
-            s+=arr[i]; ans+=arr[i]; i++; 
-        }
-        else {
-            arr[i] -= (arr[j]-s);
-            ans+= arr[j]-s;
-            arr[j] = 0;
-            ans++;
-            j--;
-            s=0;
-        }
-        
-    }
-    // cout<<i sp j sp s sp ans<<endl;
-    if(i==j){
-        ans+= (arr[j]-s+1)/2;
-
-        if(arr[j] > 1)ans++;
-    }
-    cout<<ans<<endl;
+    if(isValid(arr, n,k)) cout<<"Yes"<<endl;
+    else cout<<"No"<<endl;
+    
 }
 
 signed main()

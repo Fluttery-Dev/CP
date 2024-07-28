@@ -44,42 +44,40 @@ template <class T, class... S> void dbs(string str, T t, S... s) {int idx = str.
 template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {if (i != a) cerr << ", "; cerr << *i;} cerr << "]\n";}
 //----------------- //
 
-
+map<char, pair<int, int>> directions = {
+    {'L', {-1, 0}},
+    {'R', {1, 0}},
+    {'U', {0, -1}},
+    {'D', {0, 1}}
+};
 
 void solve(){
-    int n;
-    cin>>n;
-    vi arr(n);
+    int n,m;
+    cin>>n>>m;
 
-    forn(i,n) cin>>arr[i];
+    int x,y;
+    cin>>x>>y;
 
-    sort(all(arr));
+    vector<string> arr(n);
 
-    int i=0, j = n-1;
-    int s = 0;
-    int ans = 0;
-    while(i<j){
-        // cout<<i sp j sp s sp ans<<endl;
-        if(s+ arr[i] < arr[j]){
-            s+=arr[i]; ans+=arr[i]; i++; 
-        }
-        else {
-            arr[i] -= (arr[j]-s);
-            ans+= arr[j]-s;
-            arr[j] = 0;
-            ans++;
-            j--;
-            s=0;
-        }
-        
+    forn(i,n){
+        cin>>arr[i];
     }
-    // cout<<i sp j sp s sp ans<<endl;
-    if(i==j){
-        ans+= (arr[j]-s+1)/2;
+    // printv(arr)
+    string ops;
+    cin>>ops;
 
-        if(arr[j] > 1)ans++;
+    for(char op: ops){
+        auto p = directions[op];
+        int a = x+p.second;
+        int b = y+p.first;
+        // cout<< a sp b sp x sp y<<endl;
+        if(a>0 && a<=n && b>0 && b<=m && arr[a-1][b-1] == '.'){
+            x = a;
+            y = b;
+        }
     }
-    cout<<ans<<endl;
+    cout<< x sp y;
 }
 
 signed main()
@@ -87,7 +85,7 @@ signed main()
    fast()
 
     int t=1;
-    cin >> t;
+    // cin >> t;
 
     while (t--)
     {

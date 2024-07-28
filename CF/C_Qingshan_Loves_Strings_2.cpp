@@ -49,37 +49,16 @@ template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {
 void solve(){
     int n;
     cin>>n;
-    vi arr(n);
 
-    forn(i,n) cin>>arr[i];
+    string str;
+    cin>>str;
+    int c = count(all(str), '1');
 
-    sort(all(arr));
-
-    int i=0, j = n-1;
-    int s = 0;
-    int ans = 0;
-    while(i<j){
-        // cout<<i sp j sp s sp ans<<endl;
-        if(s+ arr[i] < arr[j]){
-            s+=arr[i]; ans+=arr[i]; i++; 
-        }
-        else {
-            arr[i] -= (arr[j]-s);
-            ans+= arr[j]-s;
-            arr[j] = 0;
-            ans++;
-            j--;
-            s=0;
-        }
-        
+    if(str.size()&1 || c != str.size()/2){
+        cout<<-1<<endl; return;
     }
-    // cout<<i sp j sp s sp ans<<endl;
-    if(i==j){
-        ans+= (arr[j]-s+1)/2;
-
-        if(arr[j] > 1)ans++;
-    }
-    cout<<ans<<endl;
+    
+   
 }
 
 signed main()

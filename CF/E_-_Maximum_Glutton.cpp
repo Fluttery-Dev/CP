@@ -45,41 +45,33 @@ template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {
 //----------------- //
 
 
+int helper(vector<pair<int,int>> &arr, int i, int x, int y, vector<vector<vector<int>>> dp){
+
+    if(i == arr.size()) return 0;
+    if(dp[i][x][y] != -1) return dp[i][x][y];
+
+    int nt = helper(arr, i+1, x,y, dp );
+    int t = 0;
+    if(x > arr[i].first && y > arr[i].second)
+        t = 1+helper(arr, i+1, x-arr[i].first, y-arr[i].second, dp);
+
+    return dp[i][x][y] = max(nt,t);
+}  
 
 void solve(){
-    int n;
-    cin>>n;
-    vi arr(n);
+    int n,x,y;
+    cin>>n>>x>>y;
 
-    forn(i,n) cin>>arr[i];
+    vector<pair<int,int>> arr(n);
+      vector<vector<vector<int>>> dp(n, vector<vector<int>>(x + 1, vector<int>(y + 1, -1)));
 
-    sort(all(arr));
-
-    int i=0, j = n-1;
-    int s = 0;
-    int ans = 0;
-    while(i<j){
-        // cout<<i sp j sp s sp ans<<endl;
-        if(s+ arr[i] < arr[j]){
-            s+=arr[i]; ans+=arr[i]; i++; 
-        }
-        else {
-            arr[i] -= (arr[j]-s);
-            ans+= arr[j]-s;
-            arr[j] = 0;
-            ans++;
-            j--;
-            s=0;
-        }
-        
+    forn(i,n){
+        cin>>arr[i].first;
+        cin>>arr[i].second;
     }
-    // cout<<i sp j sp s sp ans<<endl;
-    if(i==j){
-        ans+= (arr[j]-s+1)/2;
-
-        if(arr[j] > 1)ans++;
-    }
-    cout<<ans<<endl;
+    int ans = helper(arr, 0, x,y, dp);
+    if(ans < n) ans++;
+    cout<<ans;
 }
 
 signed main()
@@ -87,7 +79,7 @@ signed main()
    fast()
 
     int t=1;
-    cin >> t;
+    // cin >> t;
 
     while (t--)
     {

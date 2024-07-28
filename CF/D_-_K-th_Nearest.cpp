@@ -47,39 +47,44 @@ template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {
 
 
 void solve(){
-    int n;
-    cin>>n;
-    vi arr(n);
+   int N, Q;
+    cin >> N >> Q;
 
-    forn(i,n) cin>>arr[i];
+    vector<int> A(N);
+    vector<int> B(Q);
+    vector<int> K(Q);
 
-    sort(all(arr));
-
-    int i=0, j = n-1;
-    int s = 0;
-    int ans = 0;
-    while(i<j){
-        // cout<<i sp j sp s sp ans<<endl;
-        if(s+ arr[i] < arr[j]){
-            s+=arr[i]; ans+=arr[i]; i++; 
-        }
-        else {
-            arr[i] -= (arr[j]-s);
-            ans+= arr[j]-s;
-            arr[j] = 0;
-            ans++;
-            j--;
-            s=0;
-        }
-        
+    for (int i = 0; i < N; ++i) {
+        cin >> A[i];
     }
-    // cout<<i sp j sp s sp ans<<endl;
-    if(i==j){
-        ans+= (arr[j]-s+1)/2;
 
-        if(arr[j] > 1)ans++;
+    sort(A.begin(), A.end());
+
+    for (int j = 0; j < Q; ++j) {
+        cin >> B[j] >> K[j];
     }
-    cout<<ans<<endl;
+
+    for (int j = 0; j < Q; ++j) {
+        int b = B[j];
+        int k = K[j];
+
+        auto it = lower_bound(A.begin(), A.end(), b);
+        int pos = it - A.begin();
+
+        multiset<int> distances;
+        int left = max(0ll, pos - k);
+        int right = min(N, pos + k);
+
+        for (int i = left; i < right; ++i) {
+            distances.insert(abs(A[i] - b));
+            if (distances.size() > k) {
+                distances.erase(prev(distances.end()));
+            }
+        }
+
+        // The k-th closest distance
+        cout << *distances.rbegin() << endl;
+    }
 }
 
 signed main()
@@ -87,7 +92,7 @@ signed main()
    fast()
 
     int t=1;
-    cin >> t;
+    // cin >> t;
 
     while (t--)
     {
