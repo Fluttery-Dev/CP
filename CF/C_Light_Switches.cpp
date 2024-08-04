@@ -47,45 +47,40 @@ template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {
 
 
 void solve(){
-    int n;
-    cin>>n;
-
-    string str;
-    cin>>str;
-    int c = count(all(str), '1');
-
-    if(str.size()&1 || c != str.size()/2){
-        cout<<-1<<endl; return;
-    }
-    
-    deque<int> q;
-    vi ans;
-
+    int n,k;
+    cin>>n>>k;
+    vi arr(n);
+    forn(i,n) cin>>arr[i];
+    int mx = *max_element(all(arr));
+    vi num (k+1);
     forn(i,n){
-        q.push_back(str[i]-'0');
+        int a = mx-arr[i];
+        // cout<< a sp a%k sp a/k<<endl;
+        if((a%k == 0) && (a/k)&1){
+            cout<<-1<<endl;return;
+        }
+
+        if(a%k == 0){
+            num[0]++;
+            num[k]--;
+        }else{
+            if((a/k)&1){
+                num[arr[i]+ k*(a/k +1) - mx]++;
+                num[k]--;
+            }else{
+                num[0]++;
+                num[arr[i]+ k*(a/k +1) - mx]--;
+            }
+        }
     }
-    int d = 0;
-    while (!q.empty()) {
-    if (q.front() == q.back()) {
-      if (q.front() == 0) {
-        q.push_back(0);
-        q.push_back(1);
-        ans.push_back(n - d);
-      } else {
-        q.push_front(1);
-        q.push_front(0);
-        ans.push_back(0 + d);
-      }
-      n += 2;
+    // cout<<num<<endl;
+    forn(i,k){
+        num[i+1]+=num[i];
+        if(num[i] == n){
+            cout<<mx+i<<endl;return;
+        }
     }
-    while (!q.empty() && q.front() != q.back()) {
-      q.pop_back();
-      q.pop_front();
-      ++d;
-    }
-  }
-    cout<<ans.size()<<endl;
-    printv(ans)
+    cout<<-1<<endl;
 }
 
 signed main()

@@ -49,42 +49,24 @@ template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {
 void solve(){
     int n;
     cin>>n;
+    vi arr(n-1);
 
-    string str;
-    cin>>str;
-    int c = count(all(str), '1');
+    forn(i,n-1) cin>>arr[i];
 
-    if(str.size()&1 || c != str.size()/2){
-        cout<<-1<<endl; return;
+    vi ans(n);
+    ans[0] = arr[0];
+    forn(i,n-1){
+        ans[i+1] = arr[i]|arr[i+1];
     }
-    
-    deque<int> q;
-    vi ans;
-
-    forn(i,n){
-        q.push_back(str[i]-'0');
+    ans[n-1] = arr[n-2];
+    // printv(ans)
+    forn(i,n-1){
+        // cout<<(ans[i]&ans[i+1])<<endl;
+        if((ans[i]& ans[i+1]) != arr[i]){
+            cout<<-1<<endl;
+            return;
+        }
     }
-    int d = 0;
-    while (!q.empty()) {
-    if (q.front() == q.back()) {
-      if (q.front() == 0) {
-        q.push_back(0);
-        q.push_back(1);
-        ans.push_back(n - d);
-      } else {
-        q.push_front(1);
-        q.push_front(0);
-        ans.push_back(0 + d);
-      }
-      n += 2;
-    }
-    while (!q.empty() && q.front() != q.back()) {
-      q.pop_back();
-      q.pop_front();
-      ++d;
-    }
-  }
-    cout<<ans.size()<<endl;
     printv(ans)
 }
 

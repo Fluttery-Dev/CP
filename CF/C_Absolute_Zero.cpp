@@ -50,42 +50,30 @@ void solve(){
     int n;
     cin>>n;
 
-    string str;
-    cin>>str;
-    int c = count(all(str), '1');
+    vi arr(n);
+    forn(i,n) cin>>arr[i];
+    sort(all(arr));
+    int mx = arr[n-1], mn = arr[0];
+    vi ops;
+    forn(i,40){
+        int a = 0, b = INT_MAX;
+        int mid = (mx + mn)/2;
+        ops.pb(mid);
+        // cout<<mx sp mn sp mid<<endl;
+        forn(j,n){
+            arr[j] = abs(arr[j] - mid);
+            a = max(a,arr[j]);
+            b = min(b, arr[j]);
+        }    
+        mx = a, mn = b;
+        if(mx == 0){
+            cout<<ops.size()<<endl;
+            printv(ops)
+            return;
+        }
+    }
+    cout<<-1<<endl;
 
-    if(str.size()&1 || c != str.size()/2){
-        cout<<-1<<endl; return;
-    }
-    
-    deque<int> q;
-    vi ans;
-
-    forn(i,n){
-        q.push_back(str[i]-'0');
-    }
-    int d = 0;
-    while (!q.empty()) {
-    if (q.front() == q.back()) {
-      if (q.front() == 0) {
-        q.push_back(0);
-        q.push_back(1);
-        ans.push_back(n - d);
-      } else {
-        q.push_front(1);
-        q.push_front(0);
-        ans.push_back(0 + d);
-      }
-      n += 2;
-    }
-    while (!q.empty() && q.front() != q.back()) {
-      q.pop_back();
-      q.pop_front();
-      ++d;
-    }
-  }
-    cout<<ans.size()<<endl;
-    printv(ans)
 }
 
 signed main()

@@ -44,48 +44,42 @@ template <class T, class... S> void dbs(string str, T t, S... s) {int idx = str.
 template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {if (i != a) cerr << ", "; cerr << *i;} cerr << "]\n";}
 //----------------- //
 
-
+int calc(string s){
+    int ans = 2;
+    forn(i,s.size()-1){
+        if(s[i] == s[i+1]) ans++;
+        else ans+=2;
+    }
+    return ans;
+}
 
 void solve(){
-    int n;
-    cin>>n;
-
-    string str;
-    cin>>str;
-    int c = count(all(str), '1');
-
-    if(str.size()&1 || c != str.size()/2){
-        cout<<-1<<endl; return;
-    }
-    
-    deque<int> q;
-    vi ans;
-
+    string s;
+    cin>>s;
+    int n = s.size();
+    vi f(26);
     forn(i,n){
-        q.push_back(str[i]-'0');
+        f[s[i]-'a']++;
     }
-    int d = 0;
-    while (!q.empty()) {
-    if (q.front() == q.back()) {
-      if (q.front() == 0) {
-        q.push_back(0);
-        q.push_back(1);
-        ans.push_back(n - d);
-      } else {
-        q.push_front(1);
-        q.push_front(0);
-        ans.push_back(0 + d);
-      }
-      n += 2;
+    char ch ;
+    forn(i,26){
+        if(!f[i]){
+            ch = i+'a';
+            break;
+        }
     }
-    while (!q.empty() && q.front() != q.back()) {
-      q.pop_back();
-      q.pop_front();
-      ++d;
+    int ans = 0;
+    string str;
+    forn(i,n){
+        string t = s;
+        t.insert(i,1, ch);
+        int x = calc(t);
+        if(x > ans){
+            ans = x;
+            str = t;
+        }
     }
-  }
-    cout<<ans.size()<<endl;
-    printv(ans)
+    cout<<str<<endl;
 }
 
 signed main()

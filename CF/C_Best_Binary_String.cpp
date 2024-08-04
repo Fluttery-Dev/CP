@@ -46,59 +46,60 @@ template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {
 
 
 
-void solve(){
-    int n;
-    cin>>n;
-
-    string str;
-    cin>>str;
-    int c = count(all(str), '1');
-
-    if(str.size()&1 || c != str.size()/2){
-        cout<<-1<<endl; return;
+int InvasionTime(int n, int m, vector<string> arr){
+    queue<pair<int,int>> q;
+    int c =0;
+    for(int i=0; i<n; i++){
+        for(int j=0; j<m; j++){
+            if(arr[i][j] == 'A'){
+                q.push({i,j});
+            }else if(arr[i][j] == 'E') c++;
+        }
     }
+    vector<int> x = {0,1,0,-1}, y = {1,0,-1,0};
+    int ans = 0;
+    while(true){
+        int t = q.size();
+        while(t--){
+            int a = q.front().first;
+            int b = q.front().second;
+            q.pop();
+            for(int k =0; k<4; k++){
+                int i = a+x[k];
+                int j = b+y[k];
+                // cout<<i sp j<<endl;
+                if(i>=0 && i<n && j>=0 && j<m && arr[i][j] == 'E'){
+                    q.push({i,j});
+                    arr[i][j] = 'A';
+                    c--;
+                }
+            }
+        }
+        if(q.empty())break;
+        ans++;
+    }
+
+    if(c>0) return -1;
     
-    deque<int> q;
-    vi ans;
+    return ans;
+}
 
-    forn(i,n){
-        q.push_back(str[i]-'0');
-    }
-    int d = 0;
-    while (!q.empty()) {
-    if (q.front() == q.back()) {
-      if (q.front() == 0) {
-        q.push_back(0);
-        q.push_back(1);
-        ans.push_back(n - d);
-      } else {
-        q.push_front(1);
-        q.push_front(0);
-        ans.push_back(0 + d);
-      }
-      n += 2;
-    }
-    while (!q.empty() && q.front() != q.back()) {
-      q.pop_back();
-      q.pop_front();
-      ++d;
-    }
-  }
-    cout<<ans.size()<<endl;
-    printv(ans)
+
+
+
+
+void solve(){
+
 }
 
 signed main()
 {
    fast()
-
-    int t=1;
-    cin >> t;
-
-    while (t--)
-    {
-        solve();
-    }
+    int n,m;
+    cin>>n>>m;
+    vector<string> arr(n);
+    forn(i,n) cin>>arr[i];
+    cout<<InvasionTime(n,m, arr);
 
     return 0;
 }

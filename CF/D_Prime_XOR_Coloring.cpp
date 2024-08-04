@@ -44,54 +44,32 @@ template <class T, class... S> void dbs(string str, T t, S... s) {int idx = str.
 template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {if (i != a) cerr << ", "; cerr << *i;} cerr << "]\n";}
 //----------------- //
 
-
+map<int,vi> mp = {
+    {1,{1}},
+    {2,{1,2}},
+    {3,{1,2,2}},
+    {4,{1,2,2,3}},
+    {5,{1,2,2,3,3}},
+    {6,{1,2,2,3,3,4}},
+};
 
 void solve(){
-    int n;
+    int  n;
     cin>>n;
-
-    string str;
-    cin>>str;
-    int c = count(all(str), '1');
-
-    if(str.size()&1 || c != str.size()/2){
-        cout<<-1<<endl; return;
-    }
     
-    deque<int> q;
-    vi ans;
+    if(n>=6){
+        cout<<4<<endl;
+        forn(i,n) cout<<i%4 +1 <<" ";
+        return;
+    }
 
-    forn(i,n){
-        q.push_back(str[i]-'0');
-    }
-    int d = 0;
-    while (!q.empty()) {
-    if (q.front() == q.back()) {
-      if (q.front() == 0) {
-        q.push_back(0);
-        q.push_back(1);
-        ans.push_back(n - d);
-      } else {
-        q.push_front(1);
-        q.push_front(0);
-        ans.push_back(0 + d);
-      }
-      n += 2;
-    }
-    while (!q.empty() && q.front() != q.back()) {
-      q.pop_back();
-      q.pop_front();
-      ++d;
-    }
-  }
-    cout<<ans.size()<<endl;
-    printv(ans)
+    cout<<*max_element(all(mp[n]))<<endl;
+    printv(mp[n])
 }
 
 signed main()
 {
-   fast()
-
+    fast()
     int t=1;
     cin >> t;
 

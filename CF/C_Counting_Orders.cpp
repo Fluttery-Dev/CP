@@ -50,42 +50,26 @@ void solve(){
     int n;
     cin>>n;
 
-    string str;
-    cin>>str;
-    int c = count(all(str), '1');
+    vi arr(n), brr(n);
+    forn(i,n) cin>>arr[i];
+    forn(i,n) cin>>brr[i];
 
-    if(str.size()&1 || c != str.size()/2){
-        cout<<-1<<endl; return;
-    }
+    sort(all(arr));
+    sort(all(brr));
+    int ans = 1;
     
-    deque<int> q;
-    vi ans;
-
     forn(i,n){
-        q.push_back(str[i]-'0');
+        if(arr[i] <= brr[i]){
+            cout<<0<<endl;return;
+        }
     }
-    int d = 0;
-    while (!q.empty()) {
-    if (q.front() == q.back()) {
-      if (q.front() == 0) {
-        q.push_back(0);
-        q.push_back(1);
-        ans.push_back(n - d);
-      } else {
-        q.push_front(1);
-        q.push_front(0);
-        ans.push_back(0 + d);
-      }
-      n += 2;
+    forn(i,n){
+        auto it = lower_bound(all(brr), arr[i]);
+        ans*= (it- brr.begin()-i);
+        ans%=MOD;
+        // cout<<it- brr.begin()-i<<" ";
     }
-    while (!q.empty() && q.front() != q.back()) {
-      q.pop_back();
-      q.pop_front();
-      ++d;
-    }
-  }
-    cout<<ans.size()<<endl;
-    printv(ans)
+    cout<<ans%MOD<<endl;
 }
 
 signed main()

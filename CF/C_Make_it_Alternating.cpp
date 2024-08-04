@@ -4,7 +4,8 @@
 #include<ext/pb_ds/tree_policy.hpp>
 using namespace std;
 
-#define MOD 1000000007
+#define MOD 998244353
+ 
 #define PI 3.1415926535897932384626433832795
 #define endl '\n'
 #define sp <<" "<<
@@ -44,53 +45,43 @@ template <class T, class... S> void dbs(string str, T t, S... s) {int idx = str.
 template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {if (i != a) cerr << ", "; cerr << *i;} cerr << "]\n";}
 //----------------- //
 
-
+int mx = 2*1e5 +1;
+vi factorials(mx);
 
 void solve(){
-    int n;
-    cin>>n;
+    string s;
+    cin>>s;
+    vi stacked;
 
-    string str;
-    cin>>str;
-    int c = count(all(str), '1');
+    int i = 1,c = 1, n = s.size();
 
-    if(str.size()&1 || c != str.size()/2){
-        cout<<-1<<endl; return;
+    while(i<n){
+        while(i<n && s[i] == s[i-1]){
+            i++;
+            c++;
+        }
+        stacked.pb(c);
+        c = 1;
+        i++;
     }
-    
-    deque<int> q;
-    vi ans;
-
-    forn(i,n){
-        q.push_back(str[i]-'0');
+    int ans = 1;
+    int count=n-stacked.size();
+    int f = factorials[n-count]%MOD;
+    for(int x: stacked){
+        ans+= x*f;
+        ans%=MOD;
     }
-    int d = 0;
-    while (!q.empty()) {
-    if (q.front() == q.back()) {
-      if (q.front() == 0) {
-        q.push_back(0);
-        q.push_back(1);
-        ans.push_back(n - d);
-      } else {
-        q.push_front(1);
-        q.push_front(0);
-        ans.push_back(0 + d);
-      }
-      n += 2;
-    }
-    while (!q.empty() && q.front() != q.back()) {
-      q.pop_back();
-      q.pop_front();
-      ++d;
-    }
-  }
-    cout<<ans.size()<<endl;
-    printv(ans)
+    cout<<count sp ans%MOD<<endl;
 }
 
 signed main()
 {
-   fast()
+    fast()
+    forn(i,mx+1){
+        if(i>1) factorials[i] = i*factorials[i-1];
+        else factorials[i] = 1;
+        factorials[i]%=MOD;
+    }
 
     int t=1;
     cin >> t;

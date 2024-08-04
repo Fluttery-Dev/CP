@@ -44,48 +44,40 @@ template <class T, class... S> void dbs(string str, T t, S... s) {int idx = str.
 template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {if (i != a) cerr << ", "; cerr << *i;} cerr << "]\n";}
 //----------------- //
 
+int calc(int  i, vector<vi> &children, vi &arr){
+    if(children[i].size() == 0){ 
+        // cout<<i sp arr[i]<<endl;
+        return arr[i];
+    }
 
+    int mn=INT_MAX;
+    for(int v: children[i]){
+        mn = min(mn, calc(v, children, arr));
+    }
+    if(i==0){
+        return arr[i] + (mn);
+    }
+    if(mn <= arr[i]) return mn;
+
+    int ans = arr[i] + (mn-arr[i])/2;
+    // cout<<i sp ans<<endl;
+    return ans;
+}
 
 void solve(){
     int n;
     cin>>n;
-
-    string str;
-    cin>>str;
-    int c = count(all(str), '1');
-
-    if(str.size()&1 || c != str.size()/2){
-        cout<<-1<<endl; return;
+    vi arr(n);
+    forn(i,n) cin>>arr[i];
+    vector<vi> children(n);
+    int t;
+    forn(i,n-1){
+        cin>>t;
+        children[t-1].pb(i+1);
     }
-    
-    deque<int> q;
-    vi ans;
-
-    forn(i,n){
-        q.push_back(str[i]-'0');
-    }
-    int d = 0;
-    while (!q.empty()) {
-    if (q.front() == q.back()) {
-      if (q.front() == 0) {
-        q.push_back(0);
-        q.push_back(1);
-        ans.push_back(n - d);
-      } else {
-        q.push_front(1);
-        q.push_front(0);
-        ans.push_back(0 + d);
-      }
-      n += 2;
-    }
-    while (!q.empty() && q.front() != q.back()) {
-      q.pop_back();
-      q.pop_front();
-      ++d;
-    }
-  }
-    cout<<ans.size()<<endl;
-    printv(ans)
+    // cout<<children<<endl;
+    int ans = calc(0, children, arr);
+    cout<<ans<<endl;
 }
 
 signed main()

@@ -49,43 +49,67 @@ template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {
 void solve(){
     int n;
     cin>>n;
+    vi arr(n);
+    vector<pair<int,int>> brr(n);
+    map<int,int> mp;
+    forn(i,n) {
+        cin>>arr[i];
+        mp[arr[i]]++;
+    }
+    for(auto p : mp){
+        if(p.second > 2){
+            cout<<"NO"<<endl; return;
+        }
+    }
+    forn(i,n){
+        brr[i] = {arr[i],i};
+    }
 
-    string str;
-    cin>>str;
-    int c = count(all(str), '1');
-
-    if(str.size()&1 || c != str.size()/2){
-        cout<<-1<<endl; return;
+    sort(all(brr));
+    forn(i,n){
+        if(brr[i].first < i+1){
+            cout<<"NO"<<endl; return;
+        }
     }
     
-    deque<int> q;
-    vi ans;
+    cout<<"YES"<<endl;
+
+    vi a(n), b(n);
+    set<int> x,y;
+    forn(i,n){
+        x.insert(i+1);
+        y.insert(i+1);
+    }
+    
+    reverse(all(brr));
 
     forn(i,n){
-        q.push_back(str[i]-'0');
+        auto p = brr[i];
+        if(x.find(p.first) == x.end()){
+            b[p.second] = p.first;
+            y.erase(p.first);
+        }else{
+            a[p.second] = p.first;
+            x.erase(p.first);
+        }
     }
-    int d = 0;
-    while (!q.empty()) {
-    if (q.front() == q.back()) {
-      if (q.front() == 0) {
-        q.push_back(0);
-        q.push_back(1);
-        ans.push_back(n - d);
-      } else {
-        q.push_front(1);
-        q.push_front(0);
-        ans.push_back(0 + d);
-      }
-      n += 2;
+    forn(i,n){
+        auto p = brr[i];
+        int j = p.second;
+        int ele =p.first;
+        if(a[j] == ele){
+            auto it = prev(y.end());
+            b[j] = *it;
+            y.erase(it);
+        }else{
+            auto it = prev(x.end());
+            a[j] = *it;
+            x.erase(it);
+        }
     }
-    while (!q.empty() && q.front() != q.back()) {
-      q.pop_back();
-      q.pop_front();
-      ++d;
-    }
-  }
-    cout<<ans.size()<<endl;
-    printv(ans)
+    printv(a);
+    printv(b);
+
 }
 
 signed main()

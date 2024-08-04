@@ -49,43 +49,19 @@ template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {
 void solve(){
     int n;
     cin>>n;
-
-    string str;
-    cin>>str;
-    int c = count(all(str), '1');
-
-    if(str.size()&1 || c != str.size()/2){
-        cout<<-1<<endl; return;
+    vi vis(n+1);
+    vis[0] = 1;
+    forn(i,n+1){
+        if(!vis[i]){
+            int j = i;
+            while(j <= n){
+                cout<<j <<" ";
+                vis[j] = 1;
+                j*=2;
+            }
+        }
     }
-    
-    deque<int> q;
-    vi ans;
-
-    forn(i,n){
-        q.push_back(str[i]-'0');
-    }
-    int d = 0;
-    while (!q.empty()) {
-    if (q.front() == q.back()) {
-      if (q.front() == 0) {
-        q.push_back(0);
-        q.push_back(1);
-        ans.push_back(n - d);
-      } else {
-        q.push_front(1);
-        q.push_front(0);
-        ans.push_back(0 + d);
-      }
-      n += 2;
-    }
-    while (!q.empty() && q.front() != q.back()) {
-      q.pop_back();
-      q.pop_front();
-      ++d;
-    }
-  }
-    cout<<ans.size()<<endl;
-    printv(ans)
+    cout<<endl;
 }
 
 signed main()
