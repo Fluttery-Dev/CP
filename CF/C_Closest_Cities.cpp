@@ -4,8 +4,7 @@
 #include<ext/pb_ds/tree_policy.hpp>
 using namespace std;
 
-#define MOD 998244353
- 
+#define MOD 1000000007
 #define PI 3.1415926535897932384626433832795
 #define endl '\n'
 #define sp <<" "<<
@@ -45,49 +44,51 @@ template <class T, class... S> void dbs(string str, T t, S... s) {int idx = str.
 template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {if (i != a) cerr << ", "; cerr << *i;} cerr << "]\n";}
 //----------------- //
 
-int mx = 2*1e5 +1;
-vi factorials(mx);
+
 
 void solve(){
-    string s;
-    cin>>s;
-    vi stacked;
+    int n;
+    cin>>n;
+    vi arr(n);
+    forn(i,n) cin>>arr[i];
+    int q;
+    cin>>q;
+    vi coinsF(n), coinsB(n);
+    coinsF[1] = 1, coinsB[n-2] = 1;
 
-    int i = 1,c = 1, n = s.size();
-
-    while(i<n){
-        while(i<n && s[i] == s[i-1]){
-            i++;
-            c++;
+    for(int i=1; i<n-1; i++){
+        int a = arr[i+1]-arr[i];
+        int b = arr[i]-arr[i-1];
+        if(a<b){
+            coinsF[i+1] = 1;
+            coinsB[i-1] = b;
+        }else{
+            coinsF[i+1] = a;
+            coinsB[i-1] = 1;
         }
-        stacked.pb(c);
-        c = 1;
-        i++;
+        // cout<<d<<endl;
     }
-    if(n==1 || s[n-1] != s[n-2])stacked.push_back(1);
-    int ans = 1;
-    int count=n-stacked.size();
-    int f = factorials[count];
-    for(int x: stacked){
-        if(x >1 ){
-            ans*=x;
+    forn(i,n){
+        if(i>0) {
+            coinsF[i]+=coinsF[i-1];
+            coinsB[n-i-1]+=coinsB[n-i];
         }
-        ans%=MOD;
     }
-    ans*=f;
-    ans%=MOD;
-    // if(count==0) ans = 1;
-    cout<<count sp ans%MOD<<endl;
+    // cout<<coinsF<<endl;
+    // cout<<coinsB<<endl;
+    int x,y;
+    while(q--){
+        cin>>x>>y;
+        if(x>y)
+            cout<<coinsB[y-1]-coinsB[x-1]<<endl;
+        else
+            cout<<coinsF[y-1]-coinsF[x-1]<<endl;
+    }
 }
 
 signed main()
 {
-    fast()
-    forn(i,mx+1){
-        if(i>1) factorials[i] = i*factorials[i-1];
-        else factorials[i] = 1;
-        factorials[i]%=MOD;
-    }
+   fast()
 
     int t=1;
     cin >> t;

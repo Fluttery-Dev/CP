@@ -46,60 +46,32 @@ template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {
 
 
 
-int InvasionTime(int n, int m, vector<string> arr){
-    queue<pair<int,int>> q;
-    int c =0;
-    for(int i=0; i<n; i++){
-        for(int j=0; j<m; j++){
-            if(arr[i][j] == 'A'){
-                q.push({i,j});
-            }else if(arr[i][j] == 'E') c++;
-        }
-    }
-    vector<int> x = {0,1,0,-1}, y = {1,0,-1,0};
-    int ans = 0;
-    while(true){
-        int t = q.size();
-        while(t--){
-            int a = q.front().first;
-            int b = q.front().second;
-            q.pop();
-            for(int k =0; k<4; k++){
-                int i = a+x[k];
-                int j = b+y[k];
-                // cout<<i sp j<<endl;
-                if(i>=0 && i<n && j>=0 && j<m && arr[i][j] == 'E'){
-                    q.push({i,j});
-                    arr[i][j] = 'A';
-                    c--;
-                }
-            }
-        }
-        if(q.empty())break;
-        ans++;
-    }
-
-    if(c>0) return -1;
-    
-    return ans;
-}
-
-
-
-
-
 void solve(){
-
+    string s;
+    cin>>s;
+    int n = s.size();
+    char last = '0';
+    forn(i,n){
+        if(s[i] == '?'){
+            s[i] = last;
+        }else{
+            last = s[i];
+        }
+    }
+    cout<<s<<endl;
 }
 
 signed main()
 {
    fast()
-    int n,m;
-    cin>>n>>m;
-    vector<string> arr(n);
-    forn(i,n) cin>>arr[i];
-    cout<<InvasionTime(n,m, arr);
+
+    int t=1;
+    cin >> t;
+
+    while (t--)
+    {
+        solve();
+    }
 
     return 0;
 }

@@ -65,15 +65,19 @@ void solve(){
         cout<<0<<endl;return;
     }
     int ans = 0;
+    bool flag = true;
     while(s.size()){
         int a = *s.begin();
         // cout<< a sp odd sp ans <<endl;
         if(a > odd){
             ans+=2;
-            odd+=a;
-        }else{
-            ans++;
+            auto it = s.end();
+            it = prev(it);
+            odd+=(*it);
+            s.erase(it);
+            continue;
         }
+        ans++;
         odd+=a;
         s.erase(s.begin());
     }
