@@ -64,9 +64,43 @@ template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {
 //----------------- //
 
 
+map<char,int> mp= {
+    {'U', 1},
+    {'D', -1},
+    {'L', -1},
+    {'R', 1},
+};
+
 
 void solve(){
+    int n;
+    cin>>n;
+    string s;
+    cin>>s;
 
+    int  v,h;
+    int ans = 0;
+    for(char ch: s){
+        cout<< ch sp h sp v sp ans<<endl;
+        if(ch == 'L' || ch == 'R'){
+            int c = mp[ch];
+            if(h!= 0 && c != h){
+                v = 0;
+                ans++;
+            }
+            h=c;
+        }
+        if(ch == 'U' || ch == 'D'){
+            int c = mp[ch];
+            if(v!=0 && c != v){
+                h = 0;
+                ans++;
+            }
+            v=c;
+        }
+    }
+    // if(v&&h) ans++;
+    cout<<ans<<endl;
 }
 
 signed main()
@@ -74,7 +108,7 @@ signed main()
    fast()
 
     int t=1;
-    cin >> t;
+    // cin >> t;
 
     while (t--)
     {

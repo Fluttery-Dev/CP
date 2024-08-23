@@ -63,16 +63,53 @@ template <class T, class... S> void dbs(string str, T t, S... s) {int idx = str.
 template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {if (i != a) cerr << ", "; cerr << *i;} cerr << "]\n";}
 //----------------- //
 
+vector<bool> isPrime(1e7+1, true);
+void sieve() {
+    int n = 1e7+1;
+    for (int p = 2; p * p <= n; ++p) {
+        if (isPrime[p]) {
+            for (int i = p * p; i <= n; i += p) {
+                isPrime[i] = false;
+            }
+        }
+    }
+}
 
 
 void solve(){
+    int n;
+    cin>>n;
+    narr(n);
 
+    sort(all(arr));
+    int primes = 0;
+    forn(i,n){
+        if(isPrime[arr[i]])primes++;
+    }
+
+    if(primes == n){
+        if(n&1){
+            cout<<"Alice"<<endl;return;
+        }
+        cout<<"Bob"<<endl;return;
+    }
+    int non = n-primes;
+    if(!(non&1)){
+        if(n&1){
+            cout<<"Alice"<<endl;return;
+        }
+        cout<<"Bob"<<endl;return;
+    }
+    if(n&1){
+            cout<<"Bob"<<endl;return;
+        }
+    cout<<"Alice"<<endl;return;
 }
 
 signed main()
 {
    fast()
-
+    sieve();
     int t=1;
     cin >> t;
 

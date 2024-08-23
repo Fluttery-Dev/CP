@@ -63,10 +63,63 @@ template <class T, class... S> void dbs(string str, T t, S... s) {int idx = str.
 template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {if (i != a) cerr << ", "; cerr << *i;} cerr << "]\n";}
 //----------------- //
 
+bool customComparator1(const pair<int, int>& p1, const pair<int, int>& p2) {
+    double val1 = static_cast<double>(p1.first + p1.second) / (p1.first * p1.second);
+    double val2 = static_cast<double>(p2.first + p2.second) / (p2.first * p2.second);
+    return val1 > val2; 
+}
 
+bool customComparator2(const pair<int, int>& p1, const pair<int, int>& p2) {
+    int min1 = min(p1.first, p1.second);
+    int min2 = min(p2.first, p2.second);
+    if (min1 != min2) {
+        return min1 < min2; 
+    } else {
+        return max(p1.first, p1.second) < max(p2.first, p2.second); 
+    }
+}
 
 void solve(){
+    int n,k;
+    cin>>n>>k;
+    vii rects(n);
 
+    forn(i,n){
+        cin>>rects[i].first>>rects[i].second;
+    }
+
+    sort(all(rects), customComparator2);
+
+    int score = 0;
+    int ops = 0;
+    int j = -1;
+    forn(i,n){
+        auto p = rects[i];
+        int a = p.first;
+        int b = p.second;
+
+        if(score + a+b > k){
+            j = i;
+            break;
+        }
+
+        score += a+b;
+        ops += a*b;
+    }
+    // printv(rects)
+    if( score < k && j == -1){
+        cout<<-1<<endl;return;
+    }
+
+    int p = k - score;
+    int l = rects[j].first;
+    int b = rects[j].second;
+    int ops2 = INT_MAX;
+    for(int i=p-b; i<=min(p,l); i++){
+        int j = p - i;
+        ops2 = min(ops2, i*b + j*(l-i));
+    }
+    cout<<ops+ops2<<endl;
 }
 
 signed main()

@@ -64,9 +64,42 @@ template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {
 //----------------- //
 
 
+bool check(int x, int k, vi &arr){
+    int n = arr.size();
+    vi brr(n), dp(n);
+
+    forn(i,n){
+        brr[i] = arr[i]>=x? 1: -1;
+    }
+    dp[0] = brr[0];
+    for(int i=1; i<n; i++){
+        if(i%k == 0){
+            dp[i] = max(dp[i-k], brr[i]);
+        }else{
+            dp[i] = dp[i-1]+brr[i];
+            if(i>k){
+                dp[i] = max(dp[i-k], dp[i]);
+            }
+        }
+    }
+    return dp[n-1] > 0;
+}
 
 void solve(){
+    int n,k;
+    cin>>n>>k;
+    narr(n);
 
+    int lo = 1, hi = 1e9;
+    while(lo <= hi){
+        int mid = (lo + hi)/2;
+        if(check(mid, k, arr)){
+            lo = mid+1;
+        }else{
+            hi = mid-1;
+        }
+    }
+    cout<<hi<<endl;
 }
 
 signed main()

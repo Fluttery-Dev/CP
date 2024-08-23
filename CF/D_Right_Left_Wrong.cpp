@@ -66,7 +66,29 @@ template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {
 
 
 void solve(){
+    int n;
+    cin>>n;
+    narr(n);
+    string str;
+    cin>>str;
+    int ans = 0;
+    vi prefix(n);
+    forn(i,n){
+        if(i>0)prefix[i]= prefix[i-1]+ arr[i];
+        else prefix[i] = arr[0];
+    }
 
+    auto l = str.find('L');
+    auto r = str.rfind('R');
+
+    while(l != string::npos && r != string:: npos && l<r){
+        // cout<<l sp r <<endl;
+        ans+= prefix[r]-prefix[l]+arr[l];
+        
+        l = str.find('L', l+1);
+        r = str.rfind('R', r-1);
+    }
+    cout<<ans<<endl;
 }
 
 signed main()

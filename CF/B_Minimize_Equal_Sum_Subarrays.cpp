@@ -66,7 +66,24 @@ template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {
 
 
 void solve(){
+    int n;
+    cin>>n;
+    vi arr(n);
+    forn(i,n)cin>>arr[i];
 
+    int k = n/2;
+    vi ans;
+    for(int i=0; i<n-1; i+=2){
+        swap(arr[i], arr[i+1]);
+    }
+    // printv(arr)
+    for(int i=0; i<k; i++){
+        ans.pb(arr[i]);
+        ans.pb(arr[i+k]);
+    }
+    if(n&1)
+        ans.insert(prev(ans.end()),arr[n-1]);
+    printv(ans)
 }
 
 signed main()

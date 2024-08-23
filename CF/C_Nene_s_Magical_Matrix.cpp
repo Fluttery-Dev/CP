@@ -66,7 +66,21 @@ template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {
 
 
 void solve(){
-
+    int n;
+    cin>>n;
+    int ans = 0;
+    forn(i,n){
+        ans+= (i+1)*(2*i+1);
+    }
+    cout<<ans sp 2*n<<endl;
+    vi arr(n);
+    iota(all(arr), 1);
+    forn(i,n){
+        cout<<1 sp (n-i)<<" ";
+        printv(arr);
+        cout<<2 sp (n-i)<<" ";
+        printv(arr);
+    }
 }
 
 signed main()

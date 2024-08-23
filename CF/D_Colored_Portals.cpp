@@ -63,10 +63,64 @@ template <class T, class... S> void dbs(string str, T t, S... s) {int idx = str.
 template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {if (i != a) cerr << ", "; cerr << *i;} cerr << "]\n";}
 //----------------- //
 
+bool hasCommonCharacter(const string& s, const string& t) {
+    return (s[0] == t[0] || s[0] == t[1] || s[1] == t[0] || s[1] == t[1]);
+}
 
+map<string,int> color = {
+    {"BG", 0},
+    {"BR",1},
+    {"BY", 2},
+    {"GR", 3},
+    {"GY", 4},
+    {"RY", 5},
+};
 
 void solve(){
+    int n,q;
+    cin>>n>>q;
+    vector<string> arr(n);
+    forn(i,n) {cin>>arr[i]; sort(all(arr[i]));}
 
+    vector<vector<int>> prev(n, vi(6,-1)), nxt(n,vi(6,n));
+
+    forn(i,n){
+        if(i>0)
+        prev[i] = prev[i-1];
+        prev[i][color[arr[i]]] = i;
+    }
+    for(int i=n-1; i>=0; i--){
+        if(i<n-1)
+        nxt[i] = nxt[i+1];
+        nxt[i][color[arr[i]]] = i;
+    }
+    // printv(prev);
+    // printv(nxt);
+
+    int a,b;
+    while(q--){
+        cin>>a>>b;
+        a--;
+        b--;
+        if(a>b) swap(a,b);
+        string x = arr[a], y = arr[b];
+        if(hasCommonCharacter(x,y)){
+            cout<<abs(a-b)<<endl; continue;
+        }
+        int ans = INT_MAX;
+        // cout<< a sp b sp x sp y<<endl;
+        forn(i,6){
+            if(color[x] != i && color[y] != i){
+                if(prev[a][i] != -1)
+                ans = min(ans, abs(prev[a][i] - a)+ abs(prev[a][i]-b));
+                if(nxt[a][i] != n)
+                ans = min(ans, abs(nxt[a][i] - a)+ abs(nxt[a][i]-b));
+                // cout<<ans<<endl;
+            }
+        }
+        if(ans == INT_MAX) cout<<-1<<endl;
+        else cout<<ans<<endl;
+    }
 }
 
 signed main()

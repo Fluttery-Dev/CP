@@ -66,7 +66,14 @@ template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {
 
 
 void solve(){
+    int n;
+    cin>>n;
+    narr(n);
 
+    if(n>2 || abs(arr[0] - arr[1]) == 1){
+        cout<<"NO"<<endl;return;
+    }
+    cout<<"YES"<<endl;
 }
 
 signed main()

@@ -64,9 +64,27 @@ template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {
 //----------------- //
 
 
+bool check (vi arr, vi brr){
+    forn(i,arr.size()){
+        if(arr[i]!=brr[i]) return false;
+    }
+    return true;
+}
 
 void solve(){
+    int n;
+    cin>>n;
+    narr;
+    nbrr;
 
+    bool flag = check(arr,brr);
+    reverse(all(brr));
+    flag |= check(arr,brr);
+    if(flag){
+        cout<<"Bob"<<endl;
+    }else{
+        cout<<"Alice"<<endl;
+    }
 }
 
 signed main()

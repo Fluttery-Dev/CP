@@ -20,25 +20,6 @@ using namespace std;
 #define vi vector<int>
 #define forn(i,n) for(int i=0; i<n; i++)
 
-#define si set<int>
-#define pii pair<int,int>
-#define mii map<int,int>
-#define vii vector<pii>
-#define sii set<pii>
-#define vvi vector<vi>
-#define vvii vector<vii>
-#define vsi vector<si>
- 
-#define in(arr,n)     for(int mm=0;mm<n;mm++)cin >>arr[mm];
-#define out(arr,n)    for(int mm=0;mm<n;mm++)cout<<arr[mm]<<" ";cout<<endl;
-#define inn(arr,m,n)  for(int mm=m;mm<n;mm++)cin >>arr[mm];
-#define outt(arr,m,n) for(int mm=m;mm<n;mm++)cout<<arr[mm]<<" ";cout<<endl;
- 
-#define narr vi arr(n);in(arr,n)
-#define nbrr vi brr(n);in(brr,n)
-#define fo(i,a,b)     for(int i=a;i<b;i++)
-#define rfo(i,a,b)    for(int i=a;i>b;i--)
-
 string to_upper(string a) { for (int i=0;i<(int)a.size();++i) if (a[i]>='a' && a[i]<='z') a[i]-='a'-'A'; return a; }
 string to_lower(string a) { for (int i=0;i<(int)a.size();++i) if (a[i]>='A' && a[i]<='Z') a[i]+='a'-'A'; return a; }
 bool prime(int a) { if (a==1) return 0; for (int i=2;i<=round(sqrt(a));++i) if (a%i==0) return 0; return 1; }
@@ -66,7 +47,33 @@ template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {
 
 
 void solve(){
+    string s,t;
+    cin>>s>>t;
 
+    int i=0,j=0;
+    int n = s.size(), m = t.size();
+
+    while(i<n && j<m){
+        if(s[i] == t[j]){
+            i++; j++;
+            continue;
+        }
+        if(s[i] == '?'){
+            s[i] = t[j];
+            i++; j++;
+        }else{
+            i++;
+        }
+    }
+    if(i==n && j<m){
+        cout<<"NO"<<endl;
+        return;
+    }
+    forn(i,n){
+        if(s[i] == '?') s[i] = 'a';
+    }
+    cout<<"YES"<<endl;
+    cout<<s<<endl;
 }
 
 signed main()

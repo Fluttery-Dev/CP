@@ -66,7 +66,16 @@ template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {
 
 
 void solve(){
+    int l,r, x,y;
+    cin>>l>>r>>x>>y;
 
+    if(r<x || y<l){
+        cout<<1<<endl; return;
+    }
+    int o = min(y,r)-max(l,x);
+    if(l!=x)o++;
+    if(r!=y)o++;
+    cout<<o<<endl;
 }
 
 signed main()

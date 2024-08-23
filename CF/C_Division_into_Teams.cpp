@@ -66,7 +66,26 @@ template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {
 
 
 void solve(){
+    int n;
+    cin>>n;
+    vii arr(n);
+    forn(i,n){
+        cin>>arr[i].first;
+        arr[i].second = i+1;
+    }
+    sort(all(arr));
 
+    vi a,b;
+    for(int i=0; i<n; i+=2){
+        a.pb(arr[i].second);
+        if(i+1<n){
+            b.pb(arr[i+1].second);
+        }
+    }
+    cout<<a.size()<<endl;
+    printv(a)
+    cout<<b.size()<<endl;
+    printv(b);
 }
 
 signed main()
@@ -74,7 +93,7 @@ signed main()
    fast()
 
     int t=1;
-    cin >> t;
+    // cin >> t;
 
     while (t--)
     {

@@ -66,7 +66,21 @@ template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {
 
 
 void solve(){
+    string str;
+    cin>>str;
 
+    
+    if(str.size()< 2 ||  str[2] == '0' || str.substr(0,2) != "10" || str=="10"){
+        cout<<"NO"<<endl;return;
+    }
+
+    string s = str.substr(2);
+    int t = stoi(s);
+    // cout<<t<<endl;
+    if(t>=2){
+        cout<<"YES"<<endl; return;
+    }
+    cout<<"NO"<<endl;
 }
 
 signed main()

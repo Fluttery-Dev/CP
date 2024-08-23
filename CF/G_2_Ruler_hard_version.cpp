@@ -63,12 +63,33 @@ template <class T, class... S> void dbs(string str, T t, S... s) {int idx = str.
 template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {if (i != a) cerr << ", "; cerr << *i;} cerr << "]\n";}
 //----------------- //
 
-
-
-void solve(){
-
-}
-
+void solve()
+{
+    int l = 2, r = 999;
+    int ans = -1;
+    while(l<r){
+        int mid1 = l + (r-l)/3;
+        int mid2 = r - (r-l)/3;
+        cout<<"? "<<mid1<<" "<<mid2<<endl;
+        cout.flush();
+        int p; cin>>p;
+        if(p==mid1*mid2){
+            ans = mid2+1;
+            l = mid2+1;
+        }
+        else if(p== mid1 * (mid2+1)){
+            ans = mid1+1;
+            l = mid1+1;
+            r = mid2;
+        }
+        else if(p== (mid1+1) * (mid2+1)){
+            ans = mid1-1;
+            r = mid1;
+        }
+    }
+    cout<<"! "<<l<<endl;
+} 
+ 
 signed main()
 {
    fast()

@@ -66,7 +66,21 @@ template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {
 
 
 void solve(){
+    int n,k;
+    cin>>n>>k;
 
+    narr;
+    nbrr;
+    multiset<pair<int,int>> s;
+    forn(i,n){
+        s.insert({arr[i], brr[i]});
+    }
+    auto last = prev(s.end());
+    int a1 = last->first;
+    s.erase(last);
+    auto it = s.begin();
+    advance(it, n/2);
+    
 }
 
 signed main()

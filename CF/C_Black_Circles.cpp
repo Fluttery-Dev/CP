@@ -66,7 +66,39 @@ template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {
 
 
 void solve(){
+    int n;
+    cin>>n;
+    vii arr(n);
+    forn(i,n) cin>>arr[i].first>>arr[i].second;
+    int sx,sy, ex, ey;
+    cin>>sx>>sy>>ex>>ey;
+    int time = (ex-sx)*(ex-sx) + (ey-sy)*(ey-sy);
+    forn(i,n){
+        int x = arr[i].first;
+        int y = arr[i].second;
+        int t = (x-ex)*(x-ex) + (y-ey)*(y-ey);
+        // int t2 = abs(y-sy);
+        // cout<< x sp y sp t sp t2<<endl;
+        // if(((x >= sx && x <= ex)|| (x >= ex && x <= sx)) && (t2 <= t)){
+        //     cout<<"No"<<endl;return;
+        // }
+        // cout<<x sp y sp t sp time<<endl;
+        if(t<= time){
+            cout<<"NO"<<endl; return;
+        }
+    }
 
+    // forn(i,n){
+    //     int x = arr[i].first;
+    //     int y = arr[i].second;
+    //     int t = abs(ex-sx) + abs(y-sy);
+    //     int t2 = abs(ex-x);
+    //     cout<< x sp y sp t sp t2<<endl;
+    //     if(((y >= ey && y <= sy)|| (y >= sy && y <= ey)) && (t2 <= t)){
+    //         cout<<"No"<<endl;return;
+    //     }
+    // }
+    cout<<"Yes"<<endl;
 }
 
 signed main()

@@ -66,6 +66,23 @@ template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {
 
 
 void solve(){
+    int n,k;
+    cin>>n>>k;
+    narr(n);
+
+    sort(all(arr), greater<int>());
+
+    int diff = 0;
+    for(int i=0; i<n; i+=2){
+        
+        if(i+1<n) {
+            diff+= arr[i]-arr[i+1];
+        }
+    }
+
+    int t = max(diff-k, 0ll);
+    if(n&1) t+=arr[n-1];
+    cout<<t<<endl;
 
 }
 

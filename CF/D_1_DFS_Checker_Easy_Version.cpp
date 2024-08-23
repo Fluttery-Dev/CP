@@ -63,10 +63,47 @@ template <class T, class... S> void dbs(string str, T t, S... s) {int idx = str.
 template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {if (i != a) cerr << ", "; cerr << *i;} cerr << "]\n";}
 //----------------- //
 
-
+bool check(vi &perm, vi &parents){
+    if(perm[0] != 1) return false;
+    forn(i,perm.size()){
+        if(i>0){
+            if(perm[(i-1)/2] != parents[perm[i]]) return false;
+        }
+    }
+    return true;
+}
 
 void solve(){
+    int n,q;
+    cin>>n>>q;
 
+    vvi child(n+1);
+    vi parent(n+1);
+    int i=2;
+    int t;
+    forn(j,n-1){
+        cin>>t;
+        child[t].pb(i);
+        parent[i] = t;
+        i++;
+    }
+    vi perm(n);
+    forn(i,n) cin>>perm[i];
+    printv(child)
+    printv(parent)
+    printv(perm)
+    int a,b;
+    while(q--){
+        cin>>a>>b;
+        auto it1 = find(all(perm), a);
+        auto it2 = find(all(perm), b);
+        swap(it1,it2);
+        if(!check(perm, parent)){
+            cout<<"NO"<<endl;
+        }else{
+            cout<<"YES"<<endl;
+        }
+    }
 }
 
 signed main()

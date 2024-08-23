@@ -66,7 +66,54 @@ template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {
 
 
 void solve(){
-
+    int n;
+    cin>>n;
+    narr(n);
+    int m;
+    cin>>m;
+    map<int,vi> mp1;
+    forn(i,n){
+        mp1[arr[i]].pb(i);
+    }
+    // printv(mp1)
+    string str;
+    while(m--){
+        bool flag = true;
+        cin>>str;
+        if(str.size() != n){
+            cout<<"NO"<<endl;continue;
+        }
+    
+        for(auto p: mp1){
+            auto v = p.second;
+            char c = str[v[0]];
+            forn(i, v.size()){
+                if(str[v[i]] !=c){
+                    // cout<<i sp str[i] sp c<<endl;
+                    flag = false; break;
+                }
+            }
+        }
+        // cout<<"sdf";
+        if(! flag){cout<<"NO"<<endl;continue;}
+        
+        map<char,vi> mp2;
+        forn(i,n){
+            mp2[str[i]].pb(i);
+        }
+        // printv(mp2)
+        for(auto p: mp2){
+            auto v = p.second;
+            int c = arr[v[0]];
+            forn(i, v.size()){
+                if(arr[v[i]] !=c){
+                    flag = false; break;
+                }
+            }
+        }
+        if(! flag){cout<<"NO"<<endl;continue;}
+        cout<<"YES"<<endl;
+    }
 }
 
 signed main()

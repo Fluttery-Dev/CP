@@ -66,7 +66,19 @@ template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {
 
 
 void solve(){
-
+    int n;
+    cin>>n;
+    narr(n);
+    set<int> s;
+    s.insert(arr[0]);
+    for(int i=1; i<n; i++){
+        if(s.find(arr[i]+1) == s.end() && s.find(arr[i]-1) == s.end()){
+            // cout<<arr[i]<<endl;
+            cout<<"NO"<<endl;return;
+        }
+        s.insert(arr[i]);
+    }
+    cout<<"YES"<<endl;
 }
 
 signed main()

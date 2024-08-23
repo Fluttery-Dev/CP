@@ -66,7 +66,10 @@ template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {
 
 
 void solve(){
+    int n,m,k;
+    cin>>n>>m>>k;
 
+    cout<<min(m,k)*min(n,k)<<endl;
 }
 
 signed main()
