@@ -204,7 +204,10 @@ void solve()
 
     int n, m;
     cin >> n >> m;
-    vi arr(n, n + 1);
+    vi arr(n);
+    forn(i,n){
+        arr[i] = (n-i);
+    }
     int t, l, r;
     while (m--)
     {
@@ -215,9 +218,10 @@ void solve()
     }
     sort(all(ops[1]));
 
-    pii last = ops[1][0];
+    pii last;
     vector<pii> ones;
-    ones.pb(last);
+    if(ops[1].size())
+    ones.pb(ops[1][0]);
     fo(i, 1, ops[1].size())
     {
         last = ones.back();
@@ -229,14 +233,12 @@ void solve()
         else
             ones.pb(curr);
     }
-    int k = n;
     for (auto p : ones)
     {
-        fo(i, p.first, p.second + 1)
+        fo(i, p.first+1, p.second + 1)
         {
-            arr[i] = k;
+            arr[i] = arr[i-1];
         }
-        k--;
     }
     for (auto p : ops[0])
     {
