@@ -66,26 +66,22 @@ template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {
 
 
 void solve(){
-    int n;
-    cin>>n;
-    narr;
-
-    set<pii> st;
-    int ans =0;
-    forn(i,n){
-        int in = i+1;
-        for(int j = 1; arr[i]*j < 2*in; j++){
-            if(st.count({arr[i]*j - in, j}))ans++;
-        }
-        st.insert({in, arr[i]});
-    }
-
-    cout<<ans<<endl;
+    int a,b,c,d;
+    cin>>a>>b>>c>>d;
+    int p = a*d;
+    int q = b*c;
+    // cout<<p sp q<<endl;
+    
+    if(p==q) cout<<0;
+    else if(!a or !c) cout<<1;
+    else if((p%q == 0) or (q%p == 0)) cout<<1;
+    else cout<<2;
+    cout<<endl;
 }
 
 signed main()
 {
-   fast()
+//    fast()
 
     int t=1;
     cin >> t;

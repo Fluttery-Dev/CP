@@ -68,19 +68,14 @@ template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {
 void solve(){
     int n;
     cin>>n;
-    narr;
-
-    set<pii> st;
-    int ans =0;
-    forn(i,n){
-        int in = i+1;
-        for(int j = 1; arr[i]*j < 2*in; j++){
-            if(st.count({arr[i]*j - in, j}))ans++;
+    int b = 1;
+    for(int a=2; a*a<=n; a++){
+        if(n%a == 0){
+            b = n/a;
+            break;
         }
-        st.insert({in, arr[i]});
     }
-
-    cout<<ans<<endl;
+    cout<<b sp n-b<<endl;
 }
 
 signed main()

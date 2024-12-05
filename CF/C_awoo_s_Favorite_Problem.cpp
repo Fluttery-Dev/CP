@@ -3,6 +3,9 @@
 #include<ext/pb_ds/assoc_container.hpp>
 #include<ext/pb_ds/tree_policy.hpp>
 using namespace std;
+using namespace __gnu_pbds;
+
+#define ordered_set tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_update> 
 
 #define MOD 1000000007
 #define PI 3.1415926535897932384626433832795
@@ -39,6 +42,9 @@ using namespace std;
 #define fo(i,a,b)     for(int i=a;i<b;i++)
 #define rfo(i,a,b)    for(int i=a;i>b;i--)
 
+#define yes cout<<"YES"<<endl
+#define no cout<<"NO"<<endl
+
 string to_upper(string a) { for (int i=0;i<(int)a.size();++i) if (a[i]>='a' && a[i]<='z') a[i]-='a'-'A'; return a; }
 string to_lower(string a) { for (int i=0;i<(int)a.size();++i) if (a[i]>='A' && a[i]<='Z') a[i]+='a'-'A'; return a; }
 bool prime(int a) { if (a==1) return 0; for (int i=2;i<=round(sqrt(a));++i) if (a%i==0) return 0; return 1; }
@@ -68,19 +74,48 @@ template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {
 void solve(){
     int n;
     cin>>n;
-    narr;
+    string s,t;
+    cin>>s>>t;
+    set<int> nexta,nextb,nextc;
 
-    set<pii> st;
-    int ans =0;
     forn(i,n){
-        int in = i+1;
-        for(int j = 1; arr[i]*j < 2*in; j++){
-            if(st.count({arr[i]*j - in, j}))ans++;
-        }
-        st.insert({in, arr[i]});
+        if(s[i] == 'a') nexta.insert(i);
+        else if(s[i] == 'b') nextb.insert(i);
+        else nextc.insert(i);
     }
 
-    cout<<ans<<endl;
+    forn(i,n){
+        // cout<<i sp s<<endl;
+        if(s[i]==t[i]) continue;
+
+        if(s[i] == 'a' && t[i] == 'b'){
+            auto j = nextb.lower_bound(i);
+            auto k = nextc.lower_bound(i);
+            if(j==nextb.end() or (k != nextc.end() and *k<*j)){
+                no;
+                return;
+            }
+            s[*j] = 'a';
+            nexta.insert(*j);
+            nextb.erase(*j);
+            continue;
+        }
+        if(s[i] == 'b' && t[i] == 'c'){
+            auto j = nextc.lower_bound(i);
+            auto k = nexta.lower_bound(i);
+            if(j==nextc.end() or (k != nexta.end() and *k<*j)){
+                no;
+                return;
+            }
+            s[*j] = 'b';
+            nextc.erase(*j);
+            nextb.insert(*j);
+            continue;
+        }
+        no;
+        return;
+    }
+    yes;
 }
 
 signed main()

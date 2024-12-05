@@ -70,16 +70,13 @@ void solve(){
     cin>>n;
     narr;
 
-    set<pii> st;
-    int ans =0;
+    int ans = (arr[0]-1);
+
     forn(i,n){
         int in = i+1;
-        for(int j = 1; arr[i]*j < 2*in; j++){
-            if(st.count({arr[i]*j - in, j}))ans++;
-        }
-        st.insert({in, arr[i]});
-    }
 
+        ans = gcd(ans, abs(arr[i]-in));
+    }
     cout<<ans<<endl;
 }
 

@@ -63,24 +63,25 @@ template <class T, class... S> void dbs(string str, T t, S... s) {int idx = str.
 template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {if (i != a) cerr << ", "; cerr << *i;} cerr << "]\n";}
 //----------------- //
 
+int majority(vi &arr){
+    int candidate=-1, votes = 0;
 
+    forn(i,arr.size()){
+        if(!votes){
+            candidate = arr[i];
+            votes++;
+        }else{
+            if(arr[i] = candidate) votes++;
+            else votes--;
+        }
+    }
+    return candidate;
+}
 
 void solve(){
     int n;
     cin>>n;
-    narr;
 
-    set<pii> st;
-    int ans =0;
-    forn(i,n){
-        int in = i+1;
-        for(int j = 1; arr[i]*j < 2*in; j++){
-            if(st.count({arr[i]*j - in, j}))ans++;
-        }
-        st.insert({in, arr[i]});
-    }
-
-    cout<<ans<<endl;
 }
 
 signed main()

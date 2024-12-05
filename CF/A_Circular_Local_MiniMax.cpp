@@ -39,6 +39,9 @@ using namespace std;
 #define fo(i,a,b)     for(int i=a;i<b;i++)
 #define rfo(i,a,b)    for(int i=a;i>b;i--)
 
+#define yes cout<<"YES"<<endl
+#define no cout<<"NO"<<endl
+
 string to_upper(string a) { for (int i=0;i<(int)a.size();++i) if (a[i]>='a' && a[i]<='z') a[i]-='a'-'A'; return a; }
 string to_lower(string a) { for (int i=0;i<(int)a.size();++i) if (a[i]>='A' && a[i]<='Z') a[i]+='a'-'A'; return a; }
 bool prime(int a) { if (a==1) return 0; for (int i=2;i<=round(sqrt(a));++i) if (a%i==0) return 0; return 1; }
@@ -70,17 +73,21 @@ void solve(){
     cin>>n;
     narr;
 
-    set<pii> st;
-    int ans =0;
-    forn(i,n){
-        int in = i+1;
-        for(int j = 1; arr[i]*j < 2*in; j++){
-            if(st.count({arr[i]*j - in, j}))ans++;
-        }
-        st.insert({in, arr[i]});
+    if(n&1){
+        no;return;
     }
-
-    cout<<ans<<endl;
+    sort(all(arr));
+    int k = n/2;
+    vi ans;
+    forn(i,k){
+        if(arr[i+k] <= arr[(i+1)%k] || arr[i+k] <= arr[(i)%k]){
+            no;return;
+        }
+        ans.pb(arr[i]);
+        ans.pb(arr[i+k]);
+    }
+    yes;
+    printv(ans)
 }
 
 signed main()
