@@ -68,42 +68,21 @@ template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {
 //----------------- //
 
 
+
 void solve(){
     int n;
     cin>>n;
-    
-    multiset<int, greater<int>> a,b;
-    int t;
-    forn(i,n){
-        cin>>t;
-        a.insert(t);
-    }
-    forn(i,n){
-        cin>>t;
-        b.insert(t);
-    }
+    narr;
 
-    
-    int ans=0;
-    while(a.size() && b.size()){
-        auto it1 = a.begin(), it2 = b.begin();
-
-        if(*it1 == *it2){
-            a.erase(it1);
-            b.erase(it2);
-        }
-        else if(*it1 > *it2){
-            a.insert(to_string(*it1).size());
-            a.erase(it1);
-            ans++;
-        }
-        else{
-            b.insert(to_string(*it2).size());
-            b.erase(it2);
-            ans++;
-        }
+    int ans = 0;
+    sort(all(arr));
+    fo(i,1,n-1){
+        int s1 = arr[i+1]-arr[i] + arr[i+1]-arr[0];
+        int s2 = arr[i+1]-arr[i-1] + arr[i]-arr[i-1];
+        ans = max({ans, s1,s2});
     }
     cout<<ans<<endl;
+    
 }
 
 signed main()
