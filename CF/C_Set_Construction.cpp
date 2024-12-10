@@ -72,18 +72,49 @@ template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {
 void solve(){
     int n;
     cin>>n;
-    narr;
-
-    int ans = 0;
-    sort(all(arr));
-    fo(i,1,n-1){
-        ans = max(ans, abs(arr[i+1]-arr[i]) + abs(arr[i+1]-arr[0]));
-    }
-    fo(i,0,n-1){
-        ans = max(ans, abs(arr[i+1]-arr[i]) + abs(arr[n-1]- arr[i]));
-    }
-    cout<<ans<<endl;
     
+    vector<set<int>> ans(n);
+    fo(i,0,n){
+        ans[i].insert(i+1);
+    }
+
+    vvi des(n), anc(n);
+    string s;
+    forn(i,n){
+        cin>>s;
+        forn(j,n){
+            if(s[j]-'0'){
+                des[j].push_back(i);
+                anc[i].push_back(j);
+            }
+        }
+    }
+
+    queue<int> q;
+    forn(i,n){
+        if(des[i].empty()){
+            q.push(i);
+        }
+    }
+    vi vis(n,0);
+    while(q.size()){
+        int u = q.front();
+        q.pop();
+
+        vis[u] = 1;
+
+        for(auto &v: des[u]){
+            for(auto &x: ans[v]){
+                ans[u].insert(x);
+            }
+        }
+        for(auto &v: anc[u]){
+            if(!vis[v]) q.push(v);
+        }
+    }
+
+    forn(i,n) printv(ans[i]);
+
 }
 
 signed main()

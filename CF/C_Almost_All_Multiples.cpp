@@ -70,20 +70,28 @@ template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {
 
 
 void solve(){
-    int n;
-    cin>>n;
-    narr;
+    int n,k; 
+    cin>>n>>k;
+    if(n%k!=0){
+        cout<<-1<<endl;return;
+    }
 
-    int ans = 0;
-    sort(all(arr));
-    fo(i,1,n-1){
-        ans = max(ans, abs(arr[i+1]-arr[i]) + abs(arr[i+1]-arr[0]));
+    vi ans(n+1);
+    iota(all(ans), 0);
+    ans[n] = 1;
+    ans[1] = k;
+
+    while(k<n){
+        for(int i=2*k; i<=n; i+=k){
+            if(n%i==0){
+                ans[k] = i;
+                k= i;
+                break;
+            }
+        }
     }
-    fo(i,0,n-1){
-        ans = max(ans, abs(arr[i+1]-arr[i]) + abs(arr[n-1]- arr[i]));
-    }
-    cout<<ans<<endl;
-    
+    fo(i,1,n+1) cout<<ans[i]<<" ";
+    cout<<endl;
 }
 
 signed main()
