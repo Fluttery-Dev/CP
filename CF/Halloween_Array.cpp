@@ -69,24 +69,8 @@ template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {
 
 
 
-void solve(){
-    int n;
-    cin>>n;
-    narr;
-    unordered_map<int,int> mp;
-    forn(i,n) mp[arr[i]]++;
-    sort(all(arr));
-    int ans = 0;
-    fo(i,1,n){
-        if(arr[i] == arr[i-1]) continue;
-        int c = mp[arr[i]];
-        int l1 = i, l2 = n-(i+c);
-        ans = max((n-i-c)*(i+c), ans);
-    }
-    if(mp.size()==1){
-        cout<<n/2<<endl;return;
-    }
-    cout<<ans<<endl;
+void solve() {
+    
 }
 
 signed main()
