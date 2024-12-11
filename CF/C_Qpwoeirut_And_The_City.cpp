@@ -72,51 +72,35 @@ template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {
 void solve(){
     int n;
     cin>>n;
+    narr;
     
-    vector<set<int>> ans(n);
-    fo(i,0,n){
-        ans[i].insert(i+1);
+    if(n&1) {
+        int sum =0;
+
+        for(int i=1; i<n-1; i+=2){
+            sum+=max(0ll, max(arr[i-1], arr[i+1])+1-arr[i]);
+            // cout<< i sp sum<<endl;
+        }
+        cout<<sum;return;
     }
 
-    vvi des(n), anc(n);
-    string s;
-    forn(i,n){
-        cin>>s;
-        forn(j,n){
-            if(s[j]-'0'){
-                des[j].push_back(i);
-                anc[i].push_back(j);
-            }
-        }
+    vi back(n,0);
+    for(int i=n-2; i>=2; i-=2){
+        if(i+2<n) back[i]+=back[i+2];
+        back[i] +=max(0ll, max(arr[i-1], arr[i+1])+1-arr[i]);
     }
-
-    queue<int> q;
-    forn(i,n){
-        if(des[i].empty()){
-            q.push(i);
-        }
-    }
-    vi vis(n,0);
-    while(q.size()){
-        int u = q.front();
-        q.pop();
-
-        for(auto &v: des[u]){
-            // cout<<u+1 sp v+1<<endl;
-            for(auto &x: ans[v]){
-                ans[u].insert(x);
-            }
-        }
-        for(auto &v: anc[u]){
-            if(!vis[v]){ q.push(v);vis[v]=1;}
-        }
-    }
-
-    forn(i,n){
-        cout<<ans[i].size()<<" ";printv(ans[i]);
-    }
+    // cout<<back<<endl;
+    int ans = back[2];
+    int sum = 0;
+    for(int i=1; i<n-1; i+=2){
+        int s = max(0ll, max(arr[i-1], arr[i+1])+1-arr[i]);
+        sum+=s;
+        if(i+3 < n-1)
+        ans = min(ans, sum + back[i+3]);
         
-
+        // cout<< i sp ans sp sum<<endl;
+    }
+    cout<<min(ans,sum);
 }
 
 signed main()
@@ -129,6 +113,7 @@ signed main()
     while (t--)
     {
         solve();
+        cout<<endl;
     }
 
     return 0;

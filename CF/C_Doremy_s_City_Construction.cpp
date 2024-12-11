@@ -72,51 +72,17 @@ template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {
 void solve(){
     int n;
     cin>>n;
-    
-    vector<set<int>> ans(n);
-    fo(i,0,n){
-        ans[i].insert(i+1);
+    narr;
+    unordered_map<int,int> mp;
+    forn(i,n) mp[arr[i]]++;
+    sort(all(arr));
+    int ans = 0;
+    fo(i,1,n){
+        if(arr[i] == arr[i-1]) continue;
+        int c = mp[arr[i]];
+        ans = max(i*(n-(i+c)) + n-c, ans);
     }
-
-    vvi des(n), anc(n);
-    string s;
-    forn(i,n){
-        cin>>s;
-        forn(j,n){
-            if(s[j]-'0'){
-                des[j].push_back(i);
-                anc[i].push_back(j);
-            }
-        }
-    }
-
-    queue<int> q;
-    forn(i,n){
-        if(des[i].empty()){
-            q.push(i);
-        }
-    }
-    vi vis(n,0);
-    while(q.size()){
-        int u = q.front();
-        q.pop();
-
-        for(auto &v: des[u]){
-            // cout<<u+1 sp v+1<<endl;
-            for(auto &x: ans[v]){
-                ans[u].insert(x);
-            }
-        }
-        for(auto &v: anc[u]){
-            if(!vis[v]){ q.push(v);vis[v]=1;}
-        }
-    }
-
-    forn(i,n){
-        cout<<ans[i].size()<<" ";printv(ans[i]);
-    }
-        
-
+    cout<<ans<<endl;
 }
 
 signed main()
