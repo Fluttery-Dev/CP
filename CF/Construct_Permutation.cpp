@@ -72,26 +72,13 @@ template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {
 void solve(){
     int n;
     cin>>n;
-    if(n%2==0){
-        cout<<-1<<endl; return;
-    }
-
-    vi ans(n);
-    iota(all(ans),1);
-    int sum = 0;
+    if(n%2==0)cout<<-1<<endl; return;
 
     forn(i,n){
-        sum+=ans[i];
-        if(sum %(n+1)==0){
-            swap(ans[i], ans[i+1]);
-            sum = 0;
-            continue;
-        }
-        if(sum > n+1){
-            sum = ans[i];
-        }
+        if(i&1) cout<<n-i<<" ";
+        else cout<<i+1<<" ";
     }
-    printv(ans)
+    cout<<endl;
 }
 
 signed main()

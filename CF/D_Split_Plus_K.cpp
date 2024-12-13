@@ -67,55 +67,37 @@ template <class T, class... S> void dbs(string str, T t, S... s) {int idx = str.
 template <class T> void prc(T a, T b) {cerr << "["; for (T i = a; i != b; ++i) {if (i != a) cerr << ", "; cerr << *i;} cerr << "]\n";}
 //----------------- //
 
-void slow_solve(int n, int k, string s, string t) {
-    set<string> was;
-
-    queue<string> q;
-    q.push(s);
-    was.insert(s);
-
-    auto add = [&](string& s, int i, int j) {
-        if (i >= 0 && i < j && j < n) {
-            swap(s[i], s[j]);
-            if (!was.count(s)) {
-                was.insert(s);
-                q.push(s);
-            }
-            swap(s[i], s[j]);
-        }
-
-    };
-
-    while (!q.empty()) {
-        s = q.front(); q.pop();
-        for (int i = 0; i < n; ++i) {
-            add(s, i, i+k);
-            add(s, i, i+k+1);
-            add(s, i-k, i);
-            add(s, i-k-1, i);
-        }
-    }
-    cout << (was.count(t) ? "YES" : "NO") << '\n';
-}
 
 
 void solve(){
     int n,k;
     cin>>n>>k;
-
-    string s,t;
-    cin>>s>>t;
-
-    string s1 = s,s2 = t;
-    sort(all(s1)); sort(all(s2));
-    if(s1!=s2){
-        no;
-        return;
+    narr;
+    
+    forn(i,n){
+        arr[i] -=k;
     }
 
-    if(n >= 6){yes; return;}
-    
-    slow_solve(n,k,s,t);
+    sort(all(arr));
+
+    if(arr[0] == arr[n-1]){
+        cout<<0<<endl; return;
+    }
+
+    if(arr[0] <=0 and arr[n-1] >=0){
+        cout<<-1<<endl; return;
+    }
+
+    int g = 0;
+
+    forn(i,n){
+        g = gcd(abs(arr[i]), g);
+    }
+    int ans =0;
+    forn(i,n){
+        ans+= (abs(arr[i]) / g) - 1;
+    }
+    cout<<ans<<endl;
 }
 
 signed main()
