@@ -8,18 +8,16 @@ const int INF = LLONG_MAX >> 1;
 int expo(int a, int b)
 {
 
-    if (a == 0 && b == 0)
-        return 1;
-
     if (b == 0)
         return 1;
 
-    int t = expo(a, b / 2) % MOD;
-    t = (t * t) % MOD;
+    if (a == 0)
+        return 0;
 
     if (b & 1)
-        return (a * t) % MOD;
-    return t;
+        return (a*expo(a,b-1)) % MOD;
+    int t = expo(a, b / 2) % MOD;
+    return (t * t) % MOD;
 }
 
 void solve()
